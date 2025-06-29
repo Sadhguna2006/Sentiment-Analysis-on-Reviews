@@ -26,7 +26,7 @@ MODEL SETUP (IMPORTANT):
 ----------------------------------------------------
 To run this app, you must download the pre-trained sentiment model and place it in the project root directory as `sentiment_model_roberta`.
 
-📦 Download the model from:
+Download the model from:
 https://drive.google.com/drive/folders/1EEQKGYYeIsvddoQLptXCae0qXaVt9c61?usp=drive_link
 
 After downloading, place the entire folder in the same directory as `app.py`.
@@ -36,7 +36,7 @@ NOTEBOOK SETUP (OPTIONAL):
 ----------------------------------------------------
 If you wish to explore or fine-tune the model using the included Jupyter notebook (`sentiment_user.ipynb`), you will also need the dataset.
 
-📂 Download the dataset from:
+Download the dataset from:
 https://drive.google.com/file/d/1d56ZnY8NJ9mWEL4SY3I-oQY9mKIW-FGK/view?usp=sharing
 
 Once downloaded, place the dataset file in the same folder as `sentiment_user.ipynb`.
@@ -76,9 +76,13 @@ HOW TO RUN LOCALLY:
 ----------------------------------------------------
 SAMPLE OUTPUT:
 ----------------------------------------------------
-Input:    "I really love this!"
+Input:    "I really love this product!"
 Output:   Sentiment: Positive
           Confidence: 96.78%
+
+Input:    "IThe film we watched was horrible"
+Output:   Sentiment: Negative
+          Confidence: 99.00%
 
 ----------------------------------------------------
 MODEL INFO:
