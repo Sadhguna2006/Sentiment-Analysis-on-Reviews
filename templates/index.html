@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentiment Analysis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-r from-purple-300 via-indigo-300 to-blue-300 flex items-center justify-center">
+
+  <section class="w-full max-w-2xl mx-auto px-6">
+    <div class="bg-white rounded-3xl shadow-2xl p-10 transform transition-all duration-300 hover:scale-[1.01]">
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-indigo-600 mb-8">
+        Sentiment Analyzer
+      </h1>
+
+      <form id="sentimentForm">
+        <label for="textInput" class="block text-gray-700 text-sm font-semibold mb-2">Enter your text</label>
+        <textarea id="textInput" name="text" rows="6" placeholder="Type something..."
+          class="w-full rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 bg-gray-50 text-gray-800 text-base px-4 py-3 outline-none resize-none transition-all duration-200"></textarea>
+
+        <div class="mt-6 flex justify-center">
+          <button type="submit"
+            class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-8 rounded-lg transition duration-200 shadow-md hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400">
+            Analyze
+          </button>
+        </div>
+      </form>
+
+      <div id="result" class="mt-8 text-center text-xl font-bold"></div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('sentimentForm');
+    const resultDiv = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = document.getElementById('textInput').value.trim();
+      if (!text) {
+        resultDiv.innerHTML = `<span class="text-red-600">Please enter text.</span>`;
+        return;
+      }
+
+      resultDiv.innerHTML = `<span class="text-gray-500">Analyzing...</span>`;
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+
+        const data = await response.json();
+        const score = (data.score * 100).toFixed(2); // Convert to percentage
+
+        let color = 'text-gray-800';
+        if (data.label === 'positive') color = 'text-green-600';
+        else if (data.label === 'negative') color = 'text-red-600';
+        else color = 'text-yellow-600';
+
+        resultDiv.innerHTML = `
+          <div class="${color}">
+            Sentiment: <span class="capitalize">${data.label}</span><br>
+            Confidence: <span class="text-black">${score}%</span>
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = `<span class="text-red-600">Error processing your request.</span>`;
+      }
+    });
+  </script>
+
+</body>
+</html>

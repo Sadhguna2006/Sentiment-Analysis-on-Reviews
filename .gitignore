@@ -1,0 +1,16 @@
+# Ignore large folders
+results/
+sentiment_model_roberta/
+
+# Ignore datasets
+*.csv
+*.numbers
+
+# Jupyter junk
+__pycache__/
+.ipynb_checkpoints/
+
+# Model files
+*.bin
+*.pt
+
